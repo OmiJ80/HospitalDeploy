@@ -1,0 +1,39 @@
+services:
+  # Backend service
+  - type: web
+    name: agastya-hospital-backend
+    env: docker
+    plan: free
+    healthCheckPath: /
+    buildCommand: mvn clean package -DskipTests
+    # Use the Dockerfile in the repo
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: ADMIN_USERNAME
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: HOSPITAL_ADMIN_USERNAME
+        sync: false
+      - key: HOSPITAL_ADMIN_PASSWORD
+        sync: false
+      - key: CORS_ALLOWED_ORIGINS
+        fromService:
+          name: agastya-hospital-frontend
+          type: web
+          property: url
+
+  # Frontend static site
+  - type: web
+    name: agastya-hospital-frontend
+    env: static
+    buildCommand: null
+    staticPublishPath: ./src/main/resources/static
+    envVars:
+      - key: API_URL
+        fromService:
+          name: agastya-hospital-backend
+          type: web
+          property: url
