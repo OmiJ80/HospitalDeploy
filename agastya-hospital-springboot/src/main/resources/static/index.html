@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agastya Hospital - Quality Healthcare Services</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <i class="fas fa-hospital-alt"></i>
+                    <span>Agastya Hospital</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#home" class="nav-link">Home</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#doctor" class="nav-link">Doctor</a></li>
+                    <li><a href="#services" class="nav-link">Services</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                    <li><a href="#" class="nav-link admin-login-btn" onclick="openLoginModal()">🔐 Admin Login</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Welcome to <span class="highlight">Agastya Hospital</span></h1>
+                <p class="hero-subtitle">Providing quality healthcare services with traditional Ayurvedic medicine and modern medical practices</p>
+                <div class="hero-buttons">
+                    <a href="#doctor" class="btn btn-primary">Meet Our Doctor</a>
+                    <a href="#contact" class="btn btn-secondary">Book Appointment</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="images/medical-symbols.jpg" alt="Medical Symbols and Healthcare">
+            </div>
+        </div>
+    </section>
+
+    <!-- OPD Timings Banner -->
+    <section class="opd-banner">
+        <div class="container">
+            <div class="opd-content">
+                <i class="fas fa-clock"></i>
+                <div class="opd-text">
+                    <h3>OPD Timings</h3>
+                    <p>6:00 PM to 10:00 PM | Monday to Sunday</p>
+                </div>
+                <a href="#contact" class="btn btn-outline">Book Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>About Agastya Hospital</h2>
+                <p>Committed to providing exceptional healthcare services</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Our Mission</h3>
+                    <p>At Agastya Hospital, we are dedicated to providing comprehensive healthcare services that combine the wisdom of traditional Ayurvedic medicine with modern medical practices. Our goal is to ensure the well-being of our patients through personalized care and treatment.</p>
+                    
+                    <h3>Our Vision</h3>
+                    <p>To be a leading healthcare institution that bridges traditional and modern medicine, offering holistic treatment approaches for better patient outcomes and community health.</p>
+                    
+                    <div class="features">
+                        <div class="feature">
+                            <i class="fas fa-user-md"></i>
+                            <h4>Expert Care</h4>
+                            <p>Qualified medical professionals</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-leaf"></i>
+                            <h4>Ayurvedic Medicine</h4>
+                            <p>Traditional healing methods</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-heart"></i>
+                            <h4>Compassionate Service</h4>
+                            <p>Patient-centered approach</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="images/stethoscope.jpg" alt="Medical Equipment">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Doctor Section -->
+    <section id="doctor" class="doctor">
+        <div class="container">
+            <div class="section-header">
+                <h2>Meet Our Doctor</h2>
+                <p>Experienced medical professional dedicated to your health</p>
+            </div>
+            <div class="doctor-card">
+                <div class="doctor-image">
+                    <img src="images/dr-tejashree-jadhav.jpg" alt="Dr. Tejashree Jadhav">
+                </div>
+                <div class="doctor-info">
+                    <h3>Dr. Tejashree Jadhav</h3>
+                    <p class="doctor-degree">BAMS MD Medicine</p>
+                    <p class="doctor-description">Dr. Tejashree Jadhav is a highly qualified medical professional with expertise in both Ayurvedic medicine and modern medical practices. With her BAMS (Bachelor of Ayurvedic Medicine and Surgery) and MD in Medicine, she brings a unique perspective to patient care, combining traditional healing wisdom with contemporary medical knowledge.</p>
+                    
+                    <div class="doctor-specialties">
+                        <h4>Specializations:</h4>
+                        <ul>
+                            <li>Ayurvedic Medicine</li>
+                            <li>General Medicine</li>
+                            <li>Holistic Healthcare</li>
+                            <li>Preventive Medicine</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="doctor-experience">
+                        <h4>Experience & Approach:</h4>
+                        <p>Dr. Jadhav believes in treating patients holistically, addressing not just symptoms but the root causes of health issues. Her approach combines the best of both traditional Ayurvedic principles and modern medical science to provide comprehensive care.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Services</h2>
+                <p>Comprehensive healthcare solutions for your well-being</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Ayurvedic Treatments</h3>
+                    <p>Traditional Ayurvedic therapies and treatments for various health conditions using natural herbs and holistic approaches.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-stethoscope"></i>
+                    <h3>General Medicine</h3>
+                    <p>Comprehensive medical consultations and treatment for common health issues and chronic conditions.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-pills"></i>
+                    <h3>Herbal Medicine</h3>
+                    <p>Natural herbal remedies and medications prepared according to traditional Ayurvedic formulations.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-spa"></i>
+                    <h3>Wellness Therapy</h3>
+                    <p>Holistic wellness programs including lifestyle counseling and preventive healthcare guidance.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-user-md"></i>
+                    <h3>Health Consultation</h3>
+                    <p>Detailed health assessments and personalized treatment plans based on individual needs.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-heartbeat"></i>
+                    <h3>Preventive Care</h3>
+                    <p>Regular health check-ups and preventive measures to maintain optimal health and prevent diseases.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Contact Us</h2>
+                <p>Get in touch for appointments and inquiries</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Address</h4>
+                            <p>Agastya Hospital<br>Medical Complex<br>Healthcare District</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>+91 XXXXX XXXXX</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>info@agastyahospital.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4>OPD Timings</h4>
+                            <p>6:00 PM - 10:00 PM<br>Monday to Sunday</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>Book an Appointment</h3>
+                    <form id="appointmentForm">
+                        <div class="form-group">
+                            <input type="text" id="patientName" name="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="patientEmail" name="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="patientPhone" name="phone" placeholder="Your Phone" required>
+                        </div>
+                        <div class="form-group">
+                            <select id="patientService" name="service" required>
+                                <option value="">Select Service</option>
+                                <option value="ayurvedic">Ayurvedic Treatment</option>
+                                <option value="general">General Medicine</option>
+                                <option value="consultation">Health Consultation</option>
+                                <option value="wellness">Wellness Therapy</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="patientMessage" name="message" placeholder="Your Message" rows="4"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Book Appointment</button>
+                    </form>
+                    <div id="appointmentMessage" class="form-message" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-hospital-alt"></i>
+                        <span>Agastya Hospital</span>
+                    </div>
+                    <p>Providing quality healthcare services with traditional Ayurvedic medicine and modern medical practices.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#doctor">Doctor</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li>Ayurvedic Treatments</li>
+                        <li>General Medicine</li>
+                        <li>Herbal Medicine</li>
+                        <li>Wellness Therapy</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-clock"></i> OPD: 6:00 PM - 10:00 PM</p>
+                    <p><i class="fas fa-phone"></i> +91 XXXXX XXXXX</p>
+                    <p><i class="fas fa-envelope"></i> info@agastyahospital.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Agastya Hospital. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🏥 Admin Login</h2>
+                <span class="close" onclick="closeLoginModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <!-- Credentials removed for security purposes -->
+
+                <form id="adminLoginForm" action="/login.html" method="get">
+                    <div class="form-group">
+                        <label for="adminUsername">Username</label>
+                        <input type="text" id="adminUsername" name="username" required placeholder="Enter username">
+                    </div>
+                    <div class="form-group">
+                        <label for="adminPassword">Password</label>
+                        <input type="password" id="adminPassword" name="password" required placeholder="Enter password">
+                    </div>
+                    <button type="button" class="btn btn-primary login-btn" onclick="window.location.href='/login.html'">🔐 Go to Login Page</button>
+                </form>
+                <div id="loginError" class="error-message" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
+

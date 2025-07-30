@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agastya Hospital - Admin Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-align: center;
+            border-left: 4px solid;
+        }
+
+        .stat-card.total { border-left-color: #2563eb; }
+        .stat-card.pending { border-left-color: #f59e0b; }
+        .stat-card.confirmed { border-left-color: #10b981; }
+        .stat-card.cancelled { border-left-color: #ef4444; }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            align-items: center;
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid #e5e7eb;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn.active {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        .search-input {
+            padding: 0.5rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            min-width: 250px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .refresh-btn {
+            background: #10b981;
+        }
+
+        .export-btn {
+            background: #059669;
+        }
+
+        .bulk-confirm-btn {
+            background: #10b981;
+        }
+
+        .bulk-cancel-btn {
+            background: #ef4444;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .appointments-section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .appointments-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .appointments-table th {
+            background: #f8fafc;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #374151;
+            border-bottom: 2px solid #e5e7eb;
+            white-space: nowrap;
+        }
+
+        .appointments-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: top;
+        }
+
+        .appointments-table tr:hover {
+            background: #f9fafb;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-confirmed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-cancelled {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .table-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .table-action-btn {
+            padding: 0.25rem 0.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .confirm-btn {
+            background: #10b981;
+            color: white;
+        }
+
+        .cancel-btn {
+            background: #ef4444;
+            color: white;
+        }
+
+        .table-action-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .no-appointments {
+            text-align: center;
+            padding: 3rem;
+            color: #6b7280;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #6b7280;
+        }
+
+        .checkbox-cell {
+            width: 40px;
+            text-align: center;
+        }
+
+        .id-cell {
+            width: 80px;
+            font-weight: 600;
+            color: #2563eb;
+        }
+
+        .name-cell {
+            min-width: 150px;
+            font-weight: 600;
+        }
+
+        .email-cell {
+            min-width: 200px;
+        }
+
+        .phone-cell {
+            min-width: 120px;
+        }
+
+        .service-cell {
+            min-width: 150px;
+        }
+
+        .date-cell {
+            min-width: 100px;
+        }
+
+        .status-cell {
+            min-width: 100px;
+        }
+
+        .actions-cell {
+            min-width: 150px;
+        }
+
+        .message-cell {
+            max-width: 200px;
+            word-wrap: break-word;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 0.5rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-input {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h1>🏥 Agastya Hospital - Admin Dashboard</h1>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <span style="opacity: 0.9; font-size: 0.9rem;" id="welcomeMessage">Welcome, Admin</span>
+                <button onclick="adminLogout()" style="background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 6px; color: white; text-decoration: none; font-size: 0.9rem; transition: all 0.3s ease; border: none; cursor: pointer;">
+                    🚪 Logout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Statistics Cards -->
+        <div class="stats-grid">
+            <div class="stat-card total">
+                <div class="stat-number" id="totalCount">-</div>
+                <div class="stat-label">Total Appointments</div>
+            </div>
+            <div class="stat-card pending">
+                <div class="stat-number" id="pendingCount">-</div>
+                <div class="stat-label">Pending</div>
+            </div>
+            <div class="stat-card confirmed">
+                <div class="stat-number" id="confirmedCount">-</div>
+                <div class="stat-label">Confirmed</div>
+            </div>
+            <div class="stat-card cancelled">
+                <div class="stat-number" id="cancelledCount">-</div>
+                <div class="stat-label">Cancelled</div>
+            </div>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="controls">
+            <span style="font-weight: 600;">Filter by status:</span>
+            <button class="filter-btn active" data-status="all">All</button>
+            <button class="filter-btn" data-status="pending">Pending</button>
+            <button class="filter-btn" data-status="confirmed">Confirmed</button>
+            <button class="filter-btn" data-status="cancelled">Cancelled</button>
+            
+            <div style="margin-left: auto; display: flex; gap: 1rem; align-items: center;">
+                <input type="text" class="search-input" placeholder="Search appointments..." onkeyup="searchAppointments(this.value)">
+                <button class="action-btn bulk-confirm-btn" onclick="bulkUpdateStatus('CONFIRMED')">✓ Bulk Confirm</button>
+                <button class="action-btn bulk-cancel-btn" onclick="bulkUpdateStatus('CANCELLED')">✗ Bulk Cancel</button>
+                <button class="action-btn export-btn" onclick="exportToCSV()">📊 Export CSV</button>
+                <button class="action-btn refresh-btn" onclick="loadDashboardData()">🔄 Refresh</button>
+            </div>
+        </div>
+
+        <!-- Appointments Table -->
+        <div class="appointments-section">
+            <div class="section-header">
+                <h2 class="section-title">📋 Appointment Requests</h2>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;">
+                        <input type="checkbox" id="selectAll" onchange="selectAllAppointments()">
+                        Select All
+                    </label>
+                    <span id="appointmentCount" style="font-size: 0.9rem; color: #6b7280;">0 appointments</span>
+                </div>
+            </div>
+            <div class="table-container">
+                <table class="appointments-table" id="appointmentsTable">
+                    <thead>
+                        <tr>
+                            <th class="checkbox-cell">
+                                <input type="checkbox" id="selectAllHeader" onchange="selectAllAppointments()">
+                            </th>
+                            <th class="id-cell">ID</th>
+                            <th class="name-cell">Name</th>
+                            <th class="email-cell">Email</th>
+                            <th class="phone-cell">Phone</th>
+                            <th class="service-cell">Service</th>
+                            <th class="date-cell">Date</th>
+                            <th class="status-cell">Status</th>
+                            <th class="message-cell">Message</th>
+                            <th class="actions-cell">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="appointmentsList">
+                        <tr>
+                            <td colspan="10" class="loading">Loading appointments...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allAppointments = [];
+        let currentFilter = 'all';
+
+        // Load dashboard data
+        async function loadDashboardData() {
+            try {
+                // Load statistics
+                const statsResponse = await fetch('/api/appointments/stats');
+                const stats = await statsResponse.json();
+                
+                document.getElementById('totalCount').textContent = stats.total;
+                document.getElementById('pendingCount').textContent = stats.pending;
+                document.getElementById('confirmedCount').textContent = stats.confirmed;
+                document.getElementById('cancelledCount').textContent = stats.cancelled;
+
+                // Load appointments
+                const appointmentsResponse = await fetch('/api/appointments');
+                allAppointments = await appointmentsResponse.json();
+                
+                displayAppointments(filterAppointments(currentFilter));
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+                document.getElementById('appointmentsList').innerHTML = 
+                    '<tr><td colspan="10" class="no-appointments">Error loading appointments</td></tr>';
+            }
+        }
+
+        // Filter appointments
+        function filterAppointments(status) {
+            if (status === 'all') {
+                return allAppointments;
+            }
+            return allAppointments.filter(apt => apt.status.toLowerCase() === status);
+        }
+
+        // Display appointments in table format
+        function displayAppointments(appointments) {
+            const tbody = document.getElementById('appointmentsList');
+            const countSpan = document.getElementById('appointmentCount');
+            
+            countSpan.textContent = `${appointments.length} appointment${appointments.length !== 1 ? 's' : ''}`;
+            
+            if (appointments.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="10" class="no-appointments">No appointments found</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = appointments.map(appointment => `
+                <tr>
+                    <td class="checkbox-cell">
+                        <input type="checkbox" class="appointment-checkbox" value="${appointment.id}">
+                    </td>
+                    <td class="id-cell">#${appointment.id}</td>
+                    <td class="name-cell">${appointment.name}</td>
+                    <td class="email-cell">${appointment.email}</td>
+                    <td class="phone-cell">${appointment.phone}</td>
+                    <td class="service-cell">${appointment.service}</td>
+                    <td class="date-cell">${new Date(appointment.createdAt).toLocaleDateString()}</td>
+                    <td class="status-cell">
+                        <span class="status-badge status-${appointment.status.toLowerCase()}">${appointment.status}</span>
+                    </td>
+                    <td class="message-cell">${appointment.message || '-'}</td>
+                    <td class="actions-cell">
+                        <div class="table-actions">
+                            ${appointment.status === 'PENDING' ? `
+                                <button class="table-action-btn confirm-btn" onclick="updateStatus(${appointment.id}, 'CONFIRMED')">✓ Confirm</button>
+                                <button class="table-action-btn cancel-btn" onclick="updateStatus(${appointment.id}, 'CANCELLED')">✗ Cancel</button>
+                            ` : `
+                                <span style="color: #6b7280; font-size: 0.8rem;">No actions</span>
+                            `}
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Update appointment status
+        async function updateStatus(appointmentId, status) {
+            try {
+                const response = await fetch(`/api/appointments/${appointmentId}/status`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ status: status })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    loadDashboardData(); // Refresh data
+                } else {
+                    alert('Error updating appointment: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Error updating appointment:', error);
+                alert('Error updating appointment');
+            }
+        }
+
+        // Search functionality
+        function searchAppointments(searchTerm) {
+            const filtered = allAppointments.filter(apt => 
+                apt.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                apt.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                apt.phone.includes(searchTerm) ||
+                apt.service.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            displayAppointments(filtered);
+        }
+
+        // Select all appointments
+        function selectAllAppointments() {
+            const checkboxes = document.querySelectorAll('.appointment-checkbox');
+            const selectAllCheckbox = document.getElementById('selectAll');
+            const selectAllHeaderCheckbox = document.getElementById('selectAllHeader');
+            
+            checkboxes.forEach(cb => cb.checked = selectAllCheckbox.checked || selectAllHeaderCheckbox.checked);
+            
+            // Sync both select all checkboxes
+            selectAllCheckbox.checked = selectAllHeaderCheckbox.checked;
+            selectAllCheckbox.checked = selectAllCheckbox.checked;
+        }
+
+        // Bulk update status
+        function bulkUpdateStatus(status) {
+            const selectedIds = Array.from(document.querySelectorAll('.appointment-checkbox:checked'))
+                .map(cb => parseInt(cb.value));
+            
+            if (selectedIds.length === 0) {
+                alert('Please select appointments to update.');
+                return;
+            }
+
+            if (confirm(`Are you sure you want to ${status.toLowerCase()} ${selectedIds.length} appointment(s)?`)) {
+                selectedIds.forEach(id => updateStatus(id, status));
+            }
+        }
+
+        // Export to CSV
+        function exportToCSV() {
+            const headers = ['ID', 'Name', 'Email', 'Phone', 'Service', 'Message', 'Status', 'Date'];
+            const csvContent = [
+                headers.join(','),
+                ...allAppointments.map(apt => [
+                    apt.id,
+                    `"${apt.name}"`,
+                    apt.email,
+                    apt.phone,
+                    `"${apt.service}"`,
+                    `"${apt.message || ''}"`,
+                    apt.status,
+                    new Date(apt.createdAt).toLocaleDateString()
+                ].join(','))
+            ].join('\n');
+
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `appointments_${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Filter button handlers
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentFilter = this.dataset.status;
+                displayAppointments(filterAppointments(currentFilter));
+            });
+        });
+
+        // Auto-refresh every 30 seconds
+        setInterval(loadDashboardData, 30000);
+
+        // Check authentication and update welcome message
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAdminAuth();
+            
+            const adminUsername = localStorage.getItem('adminUsername');
+            if (adminUsername) {
+                document.getElementById('welcomeMessage').textContent = `Welcome, ${adminUsername}`;
+            }
+        });
+
+        // Initial load
+        loadDashboardData();
+    </script>
+</body>
+</html>
+
