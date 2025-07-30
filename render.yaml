@@ -23,7 +23,7 @@ services:
         fromService:
           name: agastya-hospital-frontend
           type: web
-          property: url
+          property: host
 
   # Frontend static site
   - type: web
@@ -36,4 +36,4 @@ services:
         fromService:
           name: agastya-hospital-backend
           type: web
-          property: url
+          property: host
