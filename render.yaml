@@ -25,9 +25,6 @@ services:
           type: web
           property: host
 
-env: docker
-dockerfilePath: ./Dockerfile
-
   # Frontend static site
   - type: web
     name: agastya-hospital-frontend
